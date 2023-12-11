@@ -49,37 +49,23 @@ const Projects = ({ openModal, setOpenModal }) => {
             </ToggleButton>
           )}
           <Divider />
-          {toggle === "android app" ? (
-            <ToggleButton
-              active
-              value="android app"
-              onClick={() => setToggle("android app")}
-            >
-              ANDROID APP'S
+          {toggle === "app" ? (
+            <ToggleButton active value="app" onClick={() => setToggle("app")}>
+              Mobile
             </ToggleButton>
           ) : (
-            <ToggleButton
-              value="android app"
-              onClick={() => setToggle("android app")}
-            >
-              ANDROID APP'S
+            <ToggleButton value="app" onClick={() => setToggle("app")}>
+              Mobile
             </ToggleButton>
           )}
           <Divider />
-          {toggle === "machine learning" ? (
-            <ToggleButton
-              active
-              value="machine learning"
-              onClick={() => setToggle("machine learning")}
-            >
-              MACHINE LEARNING
+          {toggle === "api" ? (
+            <ToggleButton active value="api" onClick={() => setToggle("api")}>
+              API
             </ToggleButton>
           ) : (
-            <ToggleButton
-              value="machine learning"
-              onClick={() => setToggle("machine learning")}
-            >
-              MACHINE LEARNING
+            <ToggleButton value="api" onClick={() => setToggle("api")}>
+              API
             </ToggleButton>
           )}
         </ToggleButtonGroup>

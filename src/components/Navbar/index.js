@@ -91,14 +91,6 @@ const Navbar = () => {
             >
               Projects
             </MobileLink>
-            <MobileLink
-              href="#education"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              Education
-            </MobileLink>
             <GitHubButton
               style={{
                 padding: "10px 16px",
@@ -109,7 +101,7 @@ const Navbar = () => {
               href={Bio.github}
               target="_blank"
             >
-              Github Profile
+              Github
             </GitHubButton>
           </MobileMenu>
         )}

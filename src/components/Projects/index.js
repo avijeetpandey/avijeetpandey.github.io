@@ -18,10 +18,11 @@ const Projects = ({ openModal, setOpenModal }) => {
   return (
     <Container id="projects">
       <Wrapper>
-        <Title>Projects</Title>
+        <Title>Projects and Open Source</Title>
         <Desc>
-          I have worked on a wide range of projects. From web apps to android
-          apps. Here are some of my projects.
+          I have worked on a wide range of projects ranging from corporate to
+          open-source. I Have worked to Web and Mobile apps as well , here are
+          some of my projects
         </Desc>
         <ToggleButtonGroup>
           {toggle === "all" ? (

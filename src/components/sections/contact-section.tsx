@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { fadeUp, interactiveLift, staggerContainer, viewport } from "@/lib/animations";
+import { ctaLift, fadeUp, staggerContainer, viewport } from "@/lib/animations";
+import { useSpotlight } from "@/hooks/use-spotlight";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -38,6 +39,7 @@ const initialValues: ContactFormValues = {
 
 export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const onSpotlight = useSpotlight();
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: initialValues,
@@ -73,7 +75,7 @@ export function ContactSection() {
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText("avijeet2200@gmail.com");
-      toast.success("Copied to clipboard.");
+      toast.success("Email copied", { description: "avijeet2200@gmail.com" });
     } catch {
       toast.error("Couldn’t access the clipboard just now.");
     }
@@ -96,25 +98,28 @@ export function ContactSection() {
           viewport={viewport}
         >
           <motion.div variants={fadeUp}>
-            <Card className="h-full">
-              <CardContent className="flex h-full flex-col gap-6 p-6 sm:p-8">
+            <Card
+              onPointerMove={onSpotlight}
+              className="spotlight-card spotlight-border h-full"
+            >
+              <CardContent className="relative z-[2] flex h-full flex-col gap-6 p-6 sm:p-8">
                 <div className="space-y-5">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-primary">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-foreground/[0.05] text-primary">
                     <Sparkles className="size-6" />
                   </div>
                   <div className="space-y-3">
-                    <h3 className="text-xl font-semibold text-white sm:text-2xl">
+                    <h3 className="text-xl font-semibold text-foreground sm:text-2xl">
                       Open to serious product work.
                     </h3>
-                    <p className="text-base leading-8 text-slate-300">
+                    <p className="text-base leading-8 text-muted-foreground">
                       Best fit: backend systems, distributed platforms, internal tooling,
                       and teams that care about shipping something that actually holds up.
                     </p>
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  <div className="inline-flex w-full items-center justify-between rounded-[1.25rem] border border-white/8 bg-white/[0.02] px-4 py-3 text-sm text-slate-300">
+                <div className="mt-auto space-y-3">
+                  <div className="inline-flex w-full items-center justify-between rounded-[1.25rem] border border-border bg-foreground/[0.02] px-4 py-3 text-sm text-muted-foreground">
                     <span className="inline-flex items-center gap-2">
                       <Phone className="size-4" />
                       +91 83181 23598
@@ -137,7 +142,7 @@ export function ContactSection() {
                     href="https://linkedin.com/in/avijeet2200"
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex w-full items-center justify-between rounded-[1.25rem] border border-white/8 bg-white/[0.02] px-4 py-3 text-sm text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
+                    className="inline-flex w-full items-center justify-between rounded-[1.25rem] border border-border bg-foreground/[0.02] px-4 py-3 text-sm text-muted-foreground transition-colors hover:bg-foreground/[0.04] hover:text-foreground"
                   >
                     <span className="inline-flex items-center gap-2">
                       <BriefcaseBusiness className="size-4" />
@@ -200,11 +205,11 @@ export function ContactSection() {
                       )}
                     />
 
-                    <motion.div {...interactiveLift}>
+                    <motion.div {...ctaLift}>
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full rounded-[1.5rem]"
+                        className="button-glow w-full rounded-[1.25rem]"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? "Sending..." : "Submit inquiry"}

@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, MoveUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useMobile } from "@/hooks/use-mobile";
 import { springTransition } from "@/lib/animations";
 import { navItems } from "@/lib/data";
@@ -64,71 +65,72 @@ export function Navigation() {
       className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8"
       initial={{ y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="mx-auto flex max-w-7xl justify-center">
+      <div className="mx-auto flex max-w-7xl items-center justify-center">
         {isMobile ? (
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                aria-label="Open navigation menu"
-                className="ml-auto rounded-full border-white/8 bg-black/72 backdrop-blur-2xl"
-              >
-                <Menu />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="inset-3 w-auto rounded-[2rem] bg-black/92">
-              <SheetHeader>
-                <SheetTitle>Avijeet Pandey</SheetTitle>
-                <SheetDescription>
-                  Systems, projects, and ways to get in touch.
-                </SheetDescription>
-              </SheetHeader>
-              <nav className="mt-4 flex flex-col gap-3">
-                {navItems.map((item) => (
-                  <button
-                    key={item.href}
-                    type="button"
-                    className="rounded-[1.4rem] border border-white/8 bg-white/[0.04] px-4 py-3 text-left text-base text-foreground transition-colors hover:bg-white/[0.07]"
-                    onClick={() => {
-                      scrollToHash(item.href);
-                      setOpen(false);
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </nav>
-              <a
-                href="#contact"
-                className={buttonVariants({ variant: "default", size: "lg" })}
-                onClick={(event) => {
-                  event.preventDefault();
-                  scrollToHash("#contact");
-                  setOpen(false);
-                }}
-              >
-                Let&apos;s Talk Scale
-                <MoveUpRight />
-              </a>
-            </SheetContent>
-          </Sheet>
+          <div className="flex w-full items-center justify-end gap-2">
+            <ThemeToggle className="glass-panel" />
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  aria-label="Open navigation menu"
+                  className="glass-panel rounded-full"
+                >
+                  <Menu />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="inset-3 w-auto rounded-[2rem]">
+                <SheetHeader>
+                  <SheetTitle>Avijeet Pandey</SheetTitle>
+                  <SheetDescription>
+                    Systems, projects, and ways to get in touch.
+                  </SheetDescription>
+                </SheetHeader>
+                <nav className="mt-4 flex flex-col gap-3">
+                  {navItems.map((item) => (
+                    <button
+                      key={item.href}
+                      type="button"
+                      className="rounded-[1.4rem] border border-border bg-foreground/[0.04] px-4 py-3 text-left text-base text-foreground transition-colors hover:bg-foreground/[0.08]"
+                      onClick={() => {
+                        scrollToHash(item.href);
+                        setOpen(false);
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </nav>
+                <a
+                  href="#contact"
+                  className={buttonVariants({ variant: "default", size: "lg" })}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToHash("#contact");
+                    setOpen(false);
+                  }}
+                >
+                  Let&apos;s Talk Scale
+                  <MoveUpRight />
+                </a>
+              </SheetContent>
+            </Sheet>
+          </div>
         ) : (
           <motion.div
             className={cn(
-              "flex items-center gap-2 rounded-full border px-2 py-2 backdrop-blur-2xl transition-all duration-300",
-              scrolled
-                ? "border-white/10 bg-black/78 shadow-[0_18px_80px_rgba(0,0,0,0.48)]"
-                : "border-white/8 bg-black/60",
+              "glass-panel flex items-center gap-2 rounded-full px-2 py-2 transition-all duration-300",
+              scrolled && "shadow-[0_18px_80px_rgba(0,0,0,0.28)]",
             )}
             animate={{ scale: scrolled ? 0.97 : 1, y: scrolled ? 2 : 0 }}
             transition={springTransition}
           >
             <button
               type="button"
-              className="flex h-10 min-w-10 items-center justify-center rounded-full border border-white/8 bg-white/[0.05] px-3 text-sm font-semibold text-white"
+              className="flex h-10 min-w-10 items-center justify-center rounded-full border border-border bg-foreground/[0.05] px-3 text-sm font-semibold text-foreground transition-colors hover:bg-foreground/[0.09]"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               AKP
@@ -140,7 +142,9 @@ export function Navigation() {
                   type="button"
                   className={cn(
                     "relative rounded-full px-4 py-2 text-sm transition-colors",
-                    activeHash === item.href ? "text-white" : "text-slate-400 hover:text-white",
+                    activeHash === item.href
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                   onClick={() => scrollToHash(item.href)}
                 >
@@ -148,7 +152,7 @@ export function Navigation() {
                     {activeHash === item.href ? (
                       <motion.span
                         layoutId="nav-active-pill"
-                        className="absolute inset-0 rounded-full border border-white/8 bg-white/[0.06]"
+                        className="absolute inset-0 rounded-full border border-border bg-foreground/[0.07]"
                         transition={springTransition}
                       />
                     ) : null}
@@ -157,6 +161,7 @@ export function Navigation() {
                 </button>
               ))}
             </nav>
+            <ThemeToggle />
             <button
               type="button"
               className={buttonVariants({

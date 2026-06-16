@@ -33,7 +33,7 @@ export function CustomCursor() {
     <>
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed z-[70] hidden h-12 w-12 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm md:block"
+        className="pointer-events-none fixed z-[70] hidden h-12 w-12 rounded-full border border-foreground/20 bg-foreground/5 backdrop-blur-sm md:block"
         animate={{ x: position.x - 24, y: position.y - 24 }}
         transition={{ type: "spring", stiffness: 280, damping: 24, mass: 0.2 }}
       />

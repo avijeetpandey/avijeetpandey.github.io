@@ -30,7 +30,7 @@ function SheetOverlay({
     <DialogPrimitive.Overlay
       data-slot="sheet-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0",
+        "fixed inset-0 z-50 bg-background/60 backdrop-blur-sm data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0",
         className,
       )}
       {...props}
@@ -52,7 +52,7 @@ function SheetContent({
       <DialogPrimitive.Content
         data-slot="sheet-content"
         className={cn(
-          "fixed z-50 flex flex-col gap-6 border border-white/10 bg-card/90 p-6 text-card-foreground shadow-2xl backdrop-blur-2xl duration-300 data-[state=closed]:animate-out data-[state=open]:animate-in",
+          "fixed z-50 flex flex-col gap-6 border border-border bg-card/90 p-6 text-card-foreground shadow-2xl backdrop-blur-2xl duration-300 data-[state=closed]:animate-out data-[state=open]:animate-in",
           side === "right" &&
             "inset-y-4 right-4 h-auto w-[min(24rem,calc(100vw-2rem))] rounded-[2rem] data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right",
           side === "left" &&
@@ -66,7 +66,7 @@ function SheetContent({
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute top-5 right-5 rounded-full border border-white/10 bg-black/20 p-2 text-muted-foreground transition-colors hover:text-foreground">
+        <DialogPrimitive.Close className="absolute top-5 right-5 rounded-full border border-border bg-foreground/[0.04] p-2 text-muted-foreground transition-colors hover:text-foreground">
           <X className="size-4" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>

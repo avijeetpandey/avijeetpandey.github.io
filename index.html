@@ -8,7 +8,27 @@
       name="description"
       content="Avijeet Kumar Pandey — Senior Software Engineer in Bengaluru building high-scale backend systems, premium iOS experiences, and AI-native products."
     />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f8f9fa" media="(prefers-color-scheme: light)" />
     <title>Avijeet's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Apply the persisted/system theme before paint to avoid a flash.
+      (function () {
+        try {
+          var stored = localStorage.getItem("akp-theme");
+          var theme = stored === "light" || stored === "dark" ? stored : "dark";
+          var root = document.documentElement;
+          root.classList.toggle("dark", theme === "dark");
+          root.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

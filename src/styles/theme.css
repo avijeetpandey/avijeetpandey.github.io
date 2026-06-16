@@ -88,7 +88,7 @@
   }
 
   .section-shell {
-    @apply px-4 py-10 scroll-mt-24 sm:px-6 sm:py-14 lg:px-8 lg:py-16;
+    @apply px-4 py-10 scroll-mt-28 sm:px-6 sm:py-14 sm:scroll-mt-32 lg:px-8 lg:py-16;
   }
 
   .section-inner {

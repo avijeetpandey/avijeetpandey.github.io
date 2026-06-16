@@ -12,7 +12,7 @@ export function AppShell({ children }: PropsWithChildren) {
       <CustomCursor />
       <div className="relative z-10">
         <Navigation />
-        <main className="pb-16">{children}</main>
+        <main className="pb-16 pt-24 sm:pt-28">{children}</main>
       </div>
       <Toaster position="top-right" />
     </div>

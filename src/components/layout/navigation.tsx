@@ -61,7 +61,7 @@ export function Navigation() {
 
   return (
     <motion.header
-      className="sticky top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8"
+      className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-8"
       initial={{ y: -24, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6 }}

@@ -152,22 +152,6 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-function ProjectsGrid() {
-  return (
-    <motion.div
-      className="grid gap-4 sm:gap-5 md:grid-cols-2"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewport}
-    >
-      {featuredProjects.map((project) => (
-        <ProjectCard key={project.name} project={project} />
-      ))}
-    </motion.div>
-  );
-}
-
 function ExperienceTimeline() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -271,59 +255,89 @@ export function WorkSection() {
 
   return (
     <>
+      {/* Projects Section - Asymmetric Layout */}
       <section id="projects" className="section-shell">
         <div className="section-inner">
-          <SectionHeading
-            eyebrow="Projects"
-            title="Selected work."
-            description="A small selection of backend systems, tooling, and side projects I&apos;ve enjoyed building."
-          />
-
-          {loading ? (
-            <div className="grid gap-4 md:grid-cols-2">
-              {Array.from({ length: 4 }).map((_, item) => (
-                <Card key={item}>
-                  <CardContent className="space-y-5 p-6 sm:p-7">
-                    <Skeleton className="h-5 w-28" />
-                    <Skeleton className="h-10 w-2/3" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-[92%]" />
-                    <div className="flex flex-wrap gap-2">
-                      {Array.from({ length: 5 }).map((_, index) => (
-                        <Skeleton key={index} className="h-8 w-24 rounded-full" />
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+          <div className="grid gap-8 md:grid-cols-12 md:gap-10 lg:gap-14">
+            {/* Sticky header column */}
+            <div className="md:col-span-4">
+              <SectionHeading
+                eyebrow="Projects"
+                title="Selected work."
+                description="A small selection of backend systems, tooling, and side projects I&apos;ve enjoyed building."
+                sticky
+              />
             </div>
-          ) : (
-            <ProjectsGrid />
-          )}
+
+            {/* Scrolling content column */}
+            <div className="md:col-span-8">
+              {loading ? (
+                <div className="grid gap-4 lg:grid-cols-2">
+                  {Array.from({ length: 4 }).map((_, item) => (
+                    <Card key={item}>
+                      <CardContent className="space-y-5 p-6 sm:p-7">
+                        <Skeleton className="h-5 w-28" />
+                        <Skeleton className="h-10 w-2/3" />
+                        <Skeleton className="h-5 w-full" />
+                        <Skeleton className="h-5 w-[92%]" />
+                        <div className="flex flex-wrap gap-2">
+                          {Array.from({ length: 5 }).map((_, index) => (
+                            <Skeleton key={index} className="h-8 w-24 rounded-full" />
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              ) : (
+                <motion.div
+                  className="grid gap-4 lg:grid-cols-2 lg:gap-5"
+                  variants={staggerContainer}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={viewport}
+                >
+                  {featuredProjects.map((project) => (
+                    <ProjectCard key={project.name} project={project} />
+                  ))}
+                </motion.div>
+              )}
+            </div>
+          </div>
         </div>
       </section>
 
+      {/* Experience Section - Asymmetric Layout */}
       <section id="experience" className="section-shell">
         <div className="section-inner">
-          <SectionHeading
-            eyebrow="Experience"
-            title="Experience."
-            description="Backend-heavy roles across streaming, fintech, SaaS, and product infrastructure."
-          />
+          <div className="grid gap-8 md:grid-cols-12 md:gap-10 lg:gap-14">
+            {/* Sticky header column */}
+            <div className="md:col-span-4">
+              <SectionHeading
+                eyebrow="Experience"
+                title="Experience."
+                description="Backend-heavy roles across streaming, fintech, SaaS, and product infrastructure."
+                sticky
+              />
 
-          <motion.div
-            className="flex items-start gap-3 text-sm text-muted-foreground"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={viewport}
-          >
-            <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-primary" />
-            Five years in the part of the stack that carries the load — ingestion, trading,
-            downloads, payments, and analytics where uptime and latency are not optional.
-          </motion.div>
+              <motion.div
+                className="mt-6 flex items-start gap-3 text-sm text-muted-foreground md:sticky md:top-[22rem]"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewport}
+              >
+                <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-primary" />
+                Five years in the part of the stack that carries the load — ingestion, trading,
+                downloads, payments, and analytics where uptime and latency are not optional.
+              </motion.div>
+            </div>
 
-          <ExperienceTimeline />
+            {/* Scrolling content column */}
+            <div className="md:col-span-8">
+              <ExperienceTimeline />
+            </div>
+          </div>
         </div>
       </section>
     </>

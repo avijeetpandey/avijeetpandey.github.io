@@ -1,21 +1,27 @@
 import { motion } from "framer-motion";
 
 import { fadeUp, viewport } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
 type SectionHeadingProps = {
   eyebrow: string;
   title: string;
   description: string;
+  sticky?: boolean;
 };
 
 export function SectionHeading({
   eyebrow,
   title,
   description,
+  sticky = false,
 }: SectionHeadingProps) {
   return (
     <motion.div
-      className="max-w-3xl space-y-5"
+      className={cn(
+        "max-w-3xl space-y-5",
+        sticky && "md:sticky md:top-28 md:self-start"
+      )}
       variants={fadeUp}
       initial="hidden"
       whileInView="visible"

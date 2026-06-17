@@ -163,6 +163,44 @@
     -webkit-backdrop-filter: blur(20px);
   }
 
+  /* Premium glass card with inner rim light - Light mode default */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      0 8px 32px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transition:
+      box-shadow 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(15, 23, 42, 0.12);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 1),
+      0 16px 48px rgba(15, 23, 42, 0.12);
+  }
+
+  /* Dark mode glass card */
+  .dark .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+      0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  .dark .glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+      0 20px 56px rgba(0, 0, 0, 0.6);
+  }
+
   .surface-card {
     position: relative;
     background: var(--surface-bg);

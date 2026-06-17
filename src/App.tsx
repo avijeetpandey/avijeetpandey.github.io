@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { Noise } from "@/components/effects/noise";
+import { SystemStatus } from "@/components/effects/system-status";
 import { AppShell } from "@/components/layout/app-shell";
 import { PageLoader } from "@/components/layout/page-loader";
 import { AboutSection } from "@/components/sections/about-section";
@@ -20,6 +22,7 @@ function App() {
   return (
     <>
       <PageLoader active={loading} />
+      <Noise />
       <AppShell>
         <HeroSection />
         <AboutSection />
@@ -28,6 +31,7 @@ function App() {
         <ContactSection />
         <SiteFooter />
       </AppShell>
+      <SystemStatus />
     </>
   );
 }

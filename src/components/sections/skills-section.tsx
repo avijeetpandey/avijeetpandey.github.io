@@ -20,6 +20,7 @@ import { useSpotlight } from "@/hooks/use-spotlight";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionHeading } from "@/components/layout/section-heading";
+import { Terminal } from "@/components/visuals/terminal";
 
 const infraIcons: { icon: LucideIcon; label: string }[] = [
   { icon: Cloud, label: "AWS" },
@@ -184,6 +185,17 @@ export function SkillsSection() {
               </Card>
             </motion.div>
           )}
+        </motion.div>
+
+        {/* Terminal Visual - backend server boot sequence */}
+        <motion.div
+          className="mt-8 sm:mt-10"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewport}
+        >
+          <Terminal />
         </motion.div>
       </div>
     </section>

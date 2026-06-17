@@ -63,6 +63,10 @@
   --accent-via: 244 80% 62%;
   --accent-to: 190 90% 50%;
 
+  /* Secondary accent: neon cyan/green for metrics */
+  --metric-accent: 168 84% 50%;
+  --metric-glow: rgba(16, 185, 129, 0.25);
+
   /* Adaptive glass / surface tokens */
   --surface-bg: rgba(255, 255, 255, 0.92);
   --surface-bg-strong: #ffffff;
@@ -103,6 +107,10 @@
   --accent-from: 264 90% 72%;
   --accent-via: 250 90% 70%;
   --accent-to: 190 95% 60%;
+
+  /* Secondary accent: neon cyan/green for metrics */
+  --metric-accent: 160 84% 52%;
+  --metric-glow: rgba(16, 185, 129, 0.35);
 
   --surface-bg: rgba(255, 255, 255, 0.03);
   --surface-bg-strong: rgba(255, 255, 255, 0.045);
@@ -178,11 +186,29 @@
     background-image: linear-gradient(
       120deg,
       hsl(var(--foreground)),
-      hsl(var(--foreground) / 0.7)
+      hsl(var(--foreground) / 0.5)
     );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  /* Massive section headers with striking gradient */
+  .text-gradient-section {
+    background-image: linear-gradient(
+      to right,
+      hsl(var(--foreground)),
+      hsl(var(--foreground) / 0.45)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Metric accent text (neon cyan/green) */
+  .text-metric-accent {
+    color: hsl(var(--metric-accent));
+    text-shadow: 0 0 24px var(--metric-glow), 0 0 48px var(--metric-glow);
   }
 
   .text-gradient-accent {

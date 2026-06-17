@@ -48,6 +48,15 @@ export const featuredProjects = [
     summary: "An edge observability platform for mobile applications.",
     detail: "Uses a Rust ingestion proxy, PostgreSQL storage, and a dashboard for telemetry workflows.",
     stack: ["Rust", "PostgreSQL", "Next.js", "Telemetry"],
+    codeSnippet: `async fn ingest_telemetry(
+  payload: Json<TelemetryEvent>
+) -> Result<StatusCode> {
+  let event = payload.into_inner();
+  db.insert_event(&event).await?;
+  metrics.record_ingestion();
+  Ok(StatusCode::ACCEPTED)
+}`,
+    architectureNotes: "Event flow: Mobile SDK → Rust proxy (rate limiting, validation) → PostgreSQL (partitioned by day) → Next.js dashboard with live queries.",
   },
   {
     name: "Discord Clone",
@@ -72,6 +81,16 @@ export const featuredProjects = [
     summary: "A high-throughput heartbeat ingestion service built on Kafka and Spring Boot.",
     detail: "Focused on resilient ingestion, KPI processing, and production-style observability.",
     stack: ["Java", "Kafka", "Spring Boot", "PostgreSQL", "Prometheus"],
+    codeSnippet: `@KafkaListener(topics = "heartbeats")
+void consume(ConsumerRecord<String, Heartbeat> record) {
+  var heartbeat = record.value();
+  batcher.add(heartbeat);
+  if (batcher.isFull()) {
+    db.bulkInsert(batcher.flush());
+    metrics.recordBatch();
+  }
+}`,
+    architectureNotes: "Architecture: Kafka consumer groups → In-memory batcher (configurable size/timeout) → Bulk PostgreSQL inserts → Prometheus metrics exported via /actuator/prometheus.",
   },
   {
     name: "Reaper",

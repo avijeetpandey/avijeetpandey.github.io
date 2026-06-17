@@ -21,12 +21,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionHeading } from "@/components/layout/section-heading";
 
-const groupIcons: Record<string, LucideIcon> = {
-  "The Core": ServerCog,
-  "Data & Infrastructure": Database,
-  "Frontend & iOS": Smartphone,
-};
-
 const infraIcons: { icon: LucideIcon; label: string }[] = [
   { icon: Cloud, label: "AWS" },
   { icon: Zap, label: "Kafka" },
@@ -38,20 +32,14 @@ const infraIcons: { icon: LucideIcon; label: string }[] = [
   { icon: Network, label: "Eventing" },
 ];
 
-const spanByTitle: Record<string, string> = {
-  "The Core": "md:col-span-2",
-  "Data & Infrastructure": "md:col-span-3",
-  "Frontend & iOS": "md:col-span-1",
-};
-
 function FloatingInfraIcons() {
   return (
-    <div className="relative grid grid-cols-4 gap-3 sm:grid-cols-8 md:max-w-md">
+    <div className="mt-auto grid grid-cols-4 gap-2.5">
       {infraIcons.map(({ icon: Icon, label }, index) => (
         <motion.div
           key={label}
-          className="group/icon flex flex-col items-center gap-1.5"
-          animate={{ y: [0, index % 2 === 0 ? -6 : 6, 0] }}
+          className="group/icon flex flex-col items-center gap-1"
+          animate={{ y: [0, index % 2 === 0 ? -4 : 4, 0] }}
           transition={{
             duration: 4 + (index % 4) * 0.6,
             repeat: Number.POSITIVE_INFINITY,
@@ -59,10 +47,10 @@ function FloatingInfraIcons() {
             delay: index * 0.15,
           }}
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-foreground/[0.04] text-primary shadow-[0_8px_24px_hsl(var(--primary)/0.12)] transition-colors group-hover/icon:border-primary/40">
-            <Icon className="size-5" />
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-foreground/[0.04] text-primary shadow-[0_6px_16px_hsl(var(--primary)/0.1)] transition-colors group-hover/icon:border-primary/40 sm:h-10 sm:w-10 sm:rounded-2xl">
+            <Icon className="size-4 sm:size-5" />
           </span>
-          <span className="text-[10px] tracking-wide text-muted-foreground">{label}</span>
+          <span className="text-[9px] tracking-wide text-muted-foreground sm:text-[10px]">{label}</span>
         </motion.div>
       ))}
     </div>
@@ -71,6 +59,10 @@ function FloatingInfraIcons() {
 
 export function SkillsSection() {
   const onSpotlight = useSpotlight();
+
+  const coreGroup = skillGroups.find((g) => g.title === "The Core");
+  const infraGroup = skillGroups.find((g) => g.title === "Data & Infrastructure");
+  const frontendGroup = skillGroups.find((g) => g.title === "Frontend & iOS");
 
   return (
     <section id="skills" className="section-shell">
@@ -82,64 +74,116 @@ export function SkillsSection() {
         />
 
         <motion.div
-          className="grid gap-4 md:grid-cols-3 md:gap-5"
+          className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5"
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
         >
-          {skillGroups.map((group) => {
-            const Icon = groupIcons[group.title] ?? Layers;
-            const isInfra = group.title === "Data & Infrastructure";
-
-            return (
-              <motion.div
-                key={group.title}
-                variants={fadeUp}
-                {...interactiveLift}
-                className={spanByTitle[group.title] ?? "md:col-span-1"}
+          {/* The Core - spans 2 cols on lg, full row on sm */}
+          {coreGroup && (
+            <motion.div
+              variants={fadeUp}
+              {...interactiveLift}
+              className="sm:col-span-2 lg:col-span-2 lg:row-span-1"
+            >
+              <Card
+                onPointerMove={onSpotlight}
+                className="spotlight-card spotlight-border group h-full"
               >
-                <Card
-                  onPointerMove={onSpotlight}
-                  className="spotlight-card spotlight-border group h-full"
-                >
-                  <CardContent
-                    className={
-                      "relative z-[2] flex h-full flex-col gap-5 p-6 sm:p-7 " +
-                      (isInfra ? "md:flex-row md:items-center md:justify-between md:gap-8" : "")
-                    }
+                <CardContent className="relative z-[2] flex h-full flex-col gap-4 p-5 sm:p-6">
+                  <motion.span
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-foreground/[0.05] text-primary"
+                    whileHover={{ y: -2, scale: 1.05, rotate: -4 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
-                    <div className="flex-1 space-y-4">
-                      <motion.span
-                        className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-border bg-foreground/[0.05] text-primary"
-                        whileHover={{ y: -2, scale: 1.05, rotate: -4 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                      >
-                        <Icon className="size-6" />
-                      </motion.span>
-                      <div className="space-y-2">
-                        <h3 className="text-xl font-semibold text-foreground">{group.title}</h3>
-                        <p className="text-base leading-7 text-muted-foreground">
-                          {group.description}
-                        </p>
-                      </div>
-                      {!isInfra && (
-                        <div className="flex flex-wrap gap-2">
-                          {group.skills.map((skill) => (
-                            <Badge key={skill} variant="secondary" className="px-3 py-1.5 text-sm">
-                              {skill}
-                            </Badge>
-                          ))}
-                        </div>
-                      )}
-                    </div>
+                    <ServerCog className="size-5" />
+                  </motion.span>
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-semibold text-foreground sm:text-xl">{coreGroup.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground sm:text-base sm:leading-7">
+                      {coreGroup.description}
+                    </p>
+                  </div>
+                  <div className="mt-auto flex flex-wrap gap-2">
+                    {coreGroup.skills.map((skill) => (
+                      <Badge key={skill} variant="secondary" className="px-3 py-1.5 text-sm">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
 
-                    {isInfra && <FloatingInfraIcons />}
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
+          {/* Frontend & iOS - spans 1 col on lg */}
+          {frontendGroup && (
+            <motion.div
+              variants={fadeUp}
+              {...interactiveLift}
+              className="lg:col-span-1 lg:row-span-1"
+            >
+              <Card
+                onPointerMove={onSpotlight}
+                className="spotlight-card spotlight-border group h-full"
+              >
+                <CardContent className="relative z-[2] flex h-full flex-col gap-4 p-5 sm:p-6">
+                  <motion.span
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-foreground/[0.05] text-primary"
+                    whileHover={{ y: -2, scale: 1.05, rotate: -4 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <Smartphone className="size-5" />
+                  </motion.span>
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-semibold text-foreground sm:text-xl">{frontendGroup.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground sm:text-base sm:leading-7">
+                      {frontendGroup.description}
+                    </p>
+                  </div>
+                  <div className="mt-auto flex flex-wrap gap-2">
+                    {frontendGroup.skills.map((skill) => (
+                      <Badge key={skill} variant="secondary" className="px-3 py-1.5 text-sm">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Data & Infrastructure - spans 1 col on lg, taller with floating icons */}
+          {infraGroup && (
+            <motion.div
+              variants={fadeUp}
+              {...interactiveLift}
+              className="sm:col-span-2 lg:col-span-1 lg:row-span-1"
+            >
+              <Card
+                onPointerMove={onSpotlight}
+                className="spotlight-card spotlight-border group h-full"
+              >
+                <CardContent className="relative z-[2] flex h-full flex-col gap-4 p-5 sm:p-6">
+                  <motion.span
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-foreground/[0.05] text-primary"
+                    whileHover={{ y: -2, scale: 1.05, rotate: -4 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  >
+                    <Layers className="size-5" />
+                  </motion.span>
+                  <div className="space-y-1.5">
+                    <h3 className="text-lg font-semibold text-foreground sm:text-xl">{infraGroup.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {infraGroup.description}
+                    </p>
+                  </div>
+                  <FloatingInfraIcons />
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </section>

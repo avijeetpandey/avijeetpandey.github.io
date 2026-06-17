@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Menu, MoveUpRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -53,12 +53,17 @@ export function Navigation() {
           setActiveHash(`#${visibleEntry.target.id}`);
         }
       },
-      { rootMargin: "-28% 0px -45% 0px", threshold: [0.2, 0.45, 0.7] },
+      { rootMargin: "-20% 0px -60% 0px", threshold: [0.1, 0.3, 0.5] },
     );
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
   }, []);
+
+  const handleNavClick = (hash: string) => {
+    setActiveHash(hash);
+    scrollToHash(hash);
+  };
 
   return (
     <motion.header
@@ -96,7 +101,7 @@ export function Navigation() {
                       type="button"
                       className="rounded-[1.4rem] border border-border bg-foreground/[0.04] px-4 py-3 text-left text-base text-foreground transition-colors hover:bg-foreground/[0.08]"
                       onClick={() => {
-                        scrollToHash(item.href);
+                        handleNavClick(item.href);
                         setOpen(false);
                       }}
                     >
@@ -109,7 +114,7 @@ export function Navigation() {
                   className={buttonVariants({ variant: "default", size: "lg" })}
                   onClick={(event) => {
                     event.preventDefault();
-                    scrollToHash("#contact");
+                    handleNavClick("#contact");
                     setOpen(false);
                   }}
                 >
@@ -146,17 +151,15 @@ export function Navigation() {
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground",
                   )}
-                  onClick={() => scrollToHash(item.href)}
+                  onClick={() => handleNavClick(item.href)}
                 >
-                  <AnimatePresence>
-                    {activeHash === item.href ? (
-                      <motion.span
-                        layoutId="nav-active-pill"
-                        className="absolute inset-0 rounded-full border border-border bg-foreground/[0.07]"
-                        transition={springTransition}
-                      />
-                    ) : null}
-                  </AnimatePresence>
+                  {activeHash === item.href && (
+                    <motion.span
+                      layoutId="nav-active-pill"
+                      className="absolute inset-0 rounded-full border border-border bg-foreground/[0.07]"
+                      transition={springTransition}
+                    />
+                  )}
                   <span className="relative z-10">{item.label}</span>
                 </button>
               ))}
@@ -169,7 +172,7 @@ export function Navigation() {
                 size: "sm",
                 className: "rounded-full px-5",
               })}
-              onClick={() => scrollToHash("#contact")}
+              onClick={() => handleNavClick("#contact")}
             >
               Let&apos;s Talk Scale
               <MoveUpRight />

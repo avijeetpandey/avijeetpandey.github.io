@@ -10,9 +10,9 @@ export function AppShell({ children }: PropsWithChildren) {
     <div className="relative min-h-screen overflow-x-hidden">
       <AnimatedBackground />
       <CustomCursor />
-      <div className="relative z-10">
+      <div className="relative z-10 flex min-h-screen flex-col">
         <Navigation />
-        <main className="pb-16 pt-24 sm:pt-28">{children}</main>
+        <main className="flex-1 pb-16 pt-24 sm:pt-28">{children}</main>
       </div>
       <Toaster position="top-right" />
     </div>
